@@ -24,7 +24,7 @@ cd circom/target/release && cargo build --release && cargo install --path circom
 
 ### Attribution
 
-This monorepo was inspired by [__BattleZips__](https://twitter.com/Battlezips). Thank you for helping democratize access to the state-of-the-art in modern cryptographic theory and thereby empowering even more humans to live safer self-sovereign digital existences.
+This monorepo was inspired by [__BattleZips__](https://twitter.com/Battlezips)([GitHub](https://github.com/BattleZips/BattleZips)). Thank you for helping democratize access to the state-of-the-art in modern cryptographic theory and thereby empowering even more humans to live safer self-sovereign digital existences.
 
 ### License
 [__MIT__](./LICENSE)
