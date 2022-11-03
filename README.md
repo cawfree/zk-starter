@@ -12,14 +12,8 @@ Essentially, it's [__zero knowledge__](https://en.wikipedia.org/wiki/Zero-knowle
 ```shell
 curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh # install rust
 ```
-3. Run `yarn`, which will prepare your environment with the following steps:
+3. Run `yarn`, which will install [`circom`](https://docs.circom.io/) and automate a new [__Powers of Tau__](https://zkproof.org/2021/06/30/setup-ceremonies/#:~:text=The%20first%20phase%20referred%20to,NP%2Drelation%2Dspecific%20CRS.) ceremony.
  
-```shell
-git clone https://github.com/iden3/circom.git # clone circom
-cd circom/target/release && cargo build --release && cargo install --path circom # install circom
-./scripts/ptau.sh # execute the powers of tau ceremony
-```
-
 > All the build artifacts are cached, so you'll only be required to do this once-per-installation. If you'd like to use a larger number of constraints for your `.ptau`, you can download and verify results from public ceremonies [__here__](https://www.dropbox.com/sh/mn47gnepqu88mzl/AACaJkBU7mmCq8uU8ml0-0fma?dl=0).
 
 ### Attribution
