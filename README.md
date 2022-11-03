@@ -1,6 +1,6 @@
 # `zk-starter`
 
-The easiest way to integrate succinct verifiable on-chain computation using hidden information in custom applications that execute on a credibly-neutral public ledger.
+The easiest way to integrate succinct verifiable on-chain computation using hidden information in custom applications that execute on a credibly-neutral immutable public ledger.
 
 Essentially, it's [__zero knowledge__](https://en.wikipedia.org/wiki/Zero-knowledge_proof) for those with zero knowledge.
 
