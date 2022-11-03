@@ -23,7 +23,7 @@ if (!fs.existsSync(circomBuildPath))
     {stdio: 'inherit', cwd: circomDir},
   );
 
-const powersOfTauFinal = path.resolve('zk', 'pot15_final.ptau'); // 🦄
+const powersOfTauFinal = path.resolve('build', 'pot15_final.ptau'); // 🦄
 
 if (!fs.existsSync(powersOfTauFinal))
   child_process.execSync('./scripts/ptau.sh', {stdio: 'inherit'});
