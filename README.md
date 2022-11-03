@@ -1,4 +1,4 @@
-## `zk-starter`
+# `zk-starter`
 
 The easiest way to integrate succinct verifiable on-chain computation using hidden information in custom applications that execute on a credibly-neutral public ledger.
 
