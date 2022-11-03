@@ -24,13 +24,13 @@ circuits.forEach((circuit: string) => {
     opts,
   );
 
-  // Generate reference zkey.
   child_process.execSync(
     `yarn snarkjs zkey new build/${name}.r1cs build/pot15_final.ptau build/${name}_0000.zkey`,
      opts,
   );
 
-  // Ceremony similar to ptau, but for the circuit's zkey this time.
+  // Ceremony similar to ptau, but for the circuit's zkey this time. Generate commits to the zkey with entropy.
+  // Zkeys are intended to be hosted on IPFS, since the prover is required to encrypt their data passed into the wasm circuit.
   child_process.execSync(
    `yarn snarkjs zkey contribute build/${name}_0000.zkey build/${name}_0001.zkey --name="First ${name} contribution" -v -e="$(head -n 4096 /dev/urandom | openssl sha1)"`,
     opts,
@@ -62,7 +62,7 @@ circuits.forEach((circuit: string) => {
     opts,
   );
 
-  // Export verification key.
+  // Export verification key. (Optional, but we can use this to check the proofs generated in the client prior to submission.)
   child_process.execSync(
     `yarn snarkjs zkey export verificationkey build/${name}_final.zkey build/${name}_verification_key.json`,
     opts,
