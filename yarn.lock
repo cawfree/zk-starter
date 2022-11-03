@@ -919,6 +919,11 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
+dotenv@16.0.3:
+  version "16.0.3"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.0.3.tgz#115aec42bac5053db3c456db30cc243a5a836a07"
+  integrity sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==
+
 ejs@^3.1.6:
   version "3.1.8"
   resolved "https://registry.yarnpkg.com/ejs/-/ejs-3.1.8.tgz#758d32910c78047585c7ef1f92f9ee041c1c190b"
@@ -1840,6 +1845,11 @@ nanoassert@^2.0.0:
   resolved "https://registry.yarnpkg.com/nanoassert/-/nanoassert-2.0.0.tgz#a05f86de6c7a51618038a620f88878ed1e490c09"
   integrity sha512-7vO7n28+aYO4J+8w96AzhmU8G+Y/xpPDJz/se19ICsqj/momRbb9mh9ZUtkoJ5X3nTnPdhEJyc0qnM6yAsHBaA==
 
+nanoid@3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.0.tgz#5906f776fd886c66c24f3653e0c46fcb1d4ad6b0"
+  integrity sha512-JzxqqT5u/x+/KOFSd7JP15DOo9nOoHpx6DYatqIHUW2+flybkm+mdcraotSQR5WcnZr+qhGVh8Ted0KdfSMxlg==
+
 nanoid@^3.3.4:
   version "3.3.4"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.4.tgz#730b67e3cd09e2deacf03c027c81c9d9dbc5e8ab"
@@ -2199,7 +2209,7 @@ slice-ansi@^4.0.0:
     astral-regex "^2.0.0"
     is-fullwidth-code-point "^3.0.0"
 
-snarkjs@^0.5.0:
+snarkjs@0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/snarkjs/-/snarkjs-0.5.0.tgz#cf26bf1d3835eb16b4b330a438bad9824837d6b0"
   integrity sha512-KWz8mZ2Y+6wvn6GGkQo6/ZlKwETdAGohd40Lzpwp5TUZCn6N6O4Az1SuX1rw/qREGL6Im+ycb19suCFE8/xaKA==

@@ -9,15 +9,18 @@
   "scripts": {
     "postinstall": "node_modules/.bin/ts-node scripts/postinstall",
     "circuits": "node_modules/.bin/ts-node scripts/circuits",
+    "witness": "node_modules/.bin/ts-node scripts/witness",
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
+    "dotenv": "16.0.3",
     "eslint-config-custom": "*",
+    "nanoid": "3.3.0",
     "prettier": "latest",
-    "snarkjs": "^0.5.0",
+    "snarkjs": "0.5.0",
     "ts-node": "10.9.1",
     "turbo": "latest"
   },
