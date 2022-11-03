@@ -7,6 +7,7 @@
     "packages/*"
   ],
   "scripts": {
+    "postinstall": "node_modules/.bin/ts-node scripts/postinstall",
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
@@ -15,6 +16,7 @@
   "devDependencies": {
     "eslint-config-custom": "*",
     "prettier": "latest",
+    "ts-node": "10.9.1",
     "turbo": "latest"
   },
   "engines": {

@@ -1,73 +1,29 @@
-# Turborepo starter
+## `zk-starter`
 
-This is an official Yarn v1 starter turborepo.
+The easiest way to integrate succinct verifiable on-chain computation using hidden information in custom applications that execute on a credibly-neutral public ledger.
 
-## What's inside?
+It's [__zero knowledge__](https://en.wikipedia.org/wiki/Zero-knowledge_proof) for those with zero knowledge.
 
-This turborepo uses [Yarn](https://classic.yarnpkg.com/) as a package manager. It includes the following packages/apps:
+### Getting Started
 
-### Apps and Packages
+1. Clone the repository using `git clone https://github.com/cawfree/zk-starter`.
+2. Make sure you've installed [__Rust__](https://www.rust-lang.org/):
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `ui`: a stub React component library shared by both `web` and `docs` applications
-- `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `tsconfig`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
+```shell
+curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh # install rust
 ```
-cd my-turborepo
-yarn run build
+3. Run `yarn`, which will prepare your environment with the following steps:
+ 
+```shell
+git clone https://github.com/iden3/circom.git # clone circom
+cd circom/target/release && cargo build --release && cargo install --path circom # install circom
 ```
 
-### Develop
+> This may take a while. Luckily, the build artifacts are cached, so you'll only be required to do this once-per-installation.
 
-To develop all apps and packages, run the following command:
+### Attribution
 
-```
-cd my-turborepo
-yarn run dev
-```
+This monorepo was inspired by [__BattleZips__](https://twitter.com/Battlezips). Thank you for helping democratize access to the state-of-the-art in modern cryptographic theory and thereby empowering even more humans to live safer self-sovereign digital existences.
 
-### Remote Caching
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Pipelines](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+### License
+[__MIT__](./LICENSE)
