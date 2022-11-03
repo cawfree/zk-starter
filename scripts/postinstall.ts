@@ -27,3 +27,9 @@ const powersOfTauFinal = path.resolve('build', 'pot15_final.ptau'); // 🦄
 
 if (!fs.existsSync(powersOfTauFinal))
   child_process.execSync('./scripts/ptau.sh', {stdio: 'inherit'});
+
+// Rebuild the circuits.
+child_process.execSync('yarn circuits', {stdio: 'inherit'});
+
+// Verify them.
+child_process.execSync('yarn witness', {stdio: 'inherit'});

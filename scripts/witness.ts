@@ -10,9 +10,13 @@ import * as snarkjs from 'snarkjs';
 import {nanoid} from 'nanoid';
 import * as child_process from "child_process";
 
-void (async () => {
-  const circuit = 'Multiplier2';
-
+const setup = ({
+  circuit,
+  input: inputData,
+}: {
+  readonly circuit: string;
+  readonly input: Record<string, number>;
+}) => {
   const id = nanoid();
 
   const input = path.resolve(os.tmpdir(), `${id}-input.json`);
@@ -22,7 +26,7 @@ void (async () => {
 
   fs.writeFileSync(
     input,
-    JSON.stringify({a: 3, b: 11}, undefined, 2)
+    JSON.stringify(inputData, undefined, 2)
   );
 
   // For this circuit, there are no public variables.
@@ -30,13 +34,25 @@ void (async () => {
 
   child_process.execSync(
     `node generate_witness.js ${circuit}.wasm ${input} ${witness}`,
-   {stdio: 'inherit', cwd: path.resolve('build', `${circuit}_js`)},
+    {stdio: 'inherit', cwd: path.resolve('build', `${circuit}_js`)},
   );
 
   child_process.execSync(
     `snarkjs groth16 prove ${circuit}_final.zkey ${witness} ${proof} ${pub}`,
     {stdio: 'inherit', cwd: path.resolve('build')},
   );
+
+  return {pub, proof};
+};
+
+void (async () => {
+
+  const circuit = 'Main';
+
+  const {pub, proof} = setup({
+    circuit,
+    input: {a: 3, b: 11},
+  });
 
   const verificationKey = path.resolve('build', `${circuit}_verification_key.json`);
 
