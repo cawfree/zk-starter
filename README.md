@@ -17,9 +17,10 @@ curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh # install rust
 ```shell
 git clone https://github.com/iden3/circom.git # clone circom
 cd circom/target/release && cargo build --release && cargo install --path circom # install circom
+./scripts/ptau.sh # execute the powers of tau ceremony
 ```
 
-> This may take a while. Luckily, the build artifacts are cached, so you'll only be required to do this once-per-installation.
+> This may take a while. All the build artifacts are cached, so you'll only be required to do this once-per-installation.
 
 ### Attribution
 
