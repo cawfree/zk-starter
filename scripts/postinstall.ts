@@ -17,10 +17,13 @@ if (!fs.existsSync(circomDir))
 
 const circomBuildPath = path.resolve(buildDir, 'target', 'release');
 
-// Rebuild circom if it does not exist.
 if (!fs.existsSync(circomBuildPath))
   child_process.execSync(
     'cargo build --release && cargo install --path circom',
     {stdio: 'inherit', cwd: circomDir},
   );
 
+const powersOfTauFinal = path.resolve('zk', 'pot15_final.ptau'); // 🦄
+
+if (!fs.existsSync(powersOfTauFinal))
+  child_process.execSync('./scripts/ptau.sh', {stdio: 'inherit'});
