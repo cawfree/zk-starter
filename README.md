@@ -20,7 +20,7 @@ cd circom/target/release && cargo build --release && cargo install --path circom
 ./scripts/ptau.sh # execute the powers of tau ceremony
 ```
 
-> This may take a while. All the build artifacts are cached, so you'll only be required to do this once-per-installation.
+> All the build artifacts are cached, so you'll only be required to do this once-per-installation. If you'd like to use a larger number of constraints for your `.ptau`, you can download and verify results from public ceremonies [__here__](https://www.dropbox.com/sh/mn47gnepqu88mzl/AACaJkBU7mmCq8uU8ml0-0fma?dl=0).
 
 ### Attribution
 
