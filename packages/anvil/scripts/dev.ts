@@ -25,6 +25,8 @@ const deploy = async ({
   const contract = await factory.deploy();
   const {address: deploymentAddress} = contract;
 
+  // TODO: create the package here
+
   console.log(`Deployed ${contractName}.sol to: ${deploymentAddress}!`);
 };
 

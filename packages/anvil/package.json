@@ -1,6 +1,7 @@
 {
   "name": "anvil",
   "version": "0.0.0",
+  "main": "dist",
   "scripts": {
     "dev": "ts-node scripts/dev"
   },
