@@ -4,7 +4,7 @@ import * as path from 'path';
 
 const ext = '.circom';
 
-const circuits = fs.readdirSync('circuits')
+const circuits = fs.readdirSync(path.resolve('packages', 'circuits'))
   .filter(e => e.endsWith(ext));
 
 const opts = {stdio: 'inherit'} as const;
@@ -14,7 +14,7 @@ circuits.forEach((circuit: string) => {
 
   // Compile circuit.
   child_process.execSync(
-    `circom circuits/${circuit} -o build/ --r1cs --wasm`,
+    `circom ${path.resolve('packages', 'circuits', circuit)} -o build/ --r1cs --wasm`,
     opts,
   );
 
