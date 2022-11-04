@@ -69,7 +69,6 @@ circuits.forEach((circuit: string) => {
   );
 
   const contractsDir = path.resolve('packages', 'ethereum', 'src', 'generated');
-
   if (!fs.existsSync(contractsDir)) fs.mkdirSync(contractsDir);
 
   // Export matching solidity verifier.
@@ -86,5 +85,13 @@ circuits.forEach((circuit: string) => {
 
   // Remove the backup.
   fs.unlinkSync(path.resolve(contractsDir, `${name}Verifier.sol.bak`));
+
+  const jsDir = path.resolve('apps', 'web', 'generated');
+  if (!fs.existsSync(jsDir)) fs.mkdirSync(jsDir);
+
+  child_process.execSync(
+    `mv ${path.resolve('build', `${name}_js`)} ${jsDir}/`,
+    opts,
+  );
 
 });
