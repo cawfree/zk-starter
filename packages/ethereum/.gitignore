@@ -8,4 +8,7 @@ out/
 /broadcast/**/dry-run/
 
 # Dotenv file
-.env
+.env*
+
+# Generated
+src/generated
