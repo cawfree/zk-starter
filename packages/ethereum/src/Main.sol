@@ -3,7 +3,7 @@ pragma solidity ^0.8.11;
 
 import "./generated/MainVerifier.sol";
 
-contract Main {
+contract Main is Verifier {
     uint256 public number;
 
     function setNumber(uint256 newNumber) public {

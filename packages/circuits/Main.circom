@@ -8,4 +8,6 @@ template Main() {
     c <== a*b;
  }
 
- component main = Main();
+// Input "a" is publicly visible, whereas input "b" and the result output "c"
+// are private.
+component main{public [a]} = Main();
