@@ -9,6 +9,13 @@ const circuits = fs.readdirSync(path.resolve('packages', 'circuits'))
 
 const opts = {stdio: 'inherit'} as const;
 
+const jsDir = path.resolve('apps', 'web', 'generated');
+
+fs.existsSync(jsDir)
+  && child_process.execSync(`rm -rf ${jsDir}`, opts);
+
+fs.mkdirSync(jsDir);
+
 circuits.forEach((circuit: string) => {
   const name = circuit.substring(0, circuit.lastIndexOf(ext));
 
@@ -86,12 +93,16 @@ circuits.forEach((circuit: string) => {
   // Remove the backup.
   fs.unlinkSync(path.resolve(contractsDir, `${name}Verifier.sol.bak`));
 
-  const jsDir = path.resolve('apps', 'web', 'generated');
-  if (!fs.existsSync(jsDir)) fs.mkdirSync(jsDir);
 
   child_process.execSync(
-    `mv ${path.resolve('build', `${name}_js`)} ${jsDir}/`,
+    `cp -rf ${path.resolve('build', `${name}_js`, `${name}.wasm`)} ${jsDir}/`,
     opts,
   );
+
+  child_process.execSync(
+    `cp -rf ${path.resolve('build', `${name}_final.zkey`)} ${jsDir}/`,
+    opts,
+  );
+
 
 });

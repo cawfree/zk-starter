@@ -13,6 +13,8 @@ import {
   WagmiConfig,
 } from 'wagmi';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
+// @ts-expect-error missing declarations
+import * as snarkjs from 'snarkjs';
 
 const { chains, provider } = configureChains(
   [chain.localhost],
@@ -37,9 +39,10 @@ const wagmiClient = createClient({
 });
 
 function Main(): JSX.Element {
-  React.useEffect(() => {
+  React.useEffect(() => void (async () => {
+    const { proof, publicSignals } = await snarkjs.groth16.fullProve({a: 3, b: 11}, "Main.wasm", "circuit_final.zkey");
     console.log('hi');
-  }, []);
+  })(), []);
   return <ConnectButton />;
 }
 
