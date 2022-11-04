@@ -1,0 +1,11 @@
+{
+  "name": "anvil",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "ts-node scripts/dev"
+  },
+  "dependencies": {
+    "ethers": "5.7.2",
+    "ts-node": "10.9.1"
+  }
+}
