@@ -9,12 +9,8 @@ const circuits = fs.readdirSync(path.resolve('packages', 'circuits'))
 
 const opts = {stdio: 'inherit'} as const;
 
-const jsDir = path.resolve('apps', 'web', 'generated');
-
-fs.existsSync(jsDir)
-  && child_process.execSync(`rm -rf ${jsDir}`, opts);
-
-fs.mkdirSync(jsDir);
+const publicDir = path.resolve('apps', 'web', 'public');
+!fs.existsSync(publicDir) && fs.mkdirSync(publicDir);
 
 circuits.forEach((circuit: string) => {
   const name = circuit.substring(0, circuit.lastIndexOf(ext));
@@ -95,12 +91,17 @@ circuits.forEach((circuit: string) => {
 
 
   child_process.execSync(
-    `cp -rf ${path.resolve('build', `${name}_js`, `${name}.wasm`)} ${jsDir}/`,
+    `cp -rf ${path.resolve('build', `${name}_js`, `${name}.wasm`)} ${publicDir}/`,
     opts,
   );
 
   child_process.execSync(
-    `cp -rf ${path.resolve('build', `${name}_final.zkey`)} ${jsDir}/`,
+    `cp -rf ${path.resolve('build', `${name}_js`, 'witness_calculator.js')} ${path.resolve(publicDir, `${name}_witness_calculator.js`)}`,
+    opts,
+  );
+
+  child_process.execSync(
+    `cp -rf ${path.resolve('build', `${name}_final.zkey`)} ${publicDir}/`,
     opts,
   );
 

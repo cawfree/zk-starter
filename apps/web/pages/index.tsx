@@ -13,8 +13,8 @@ import {
   WagmiConfig,
 } from 'wagmi';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
-// @ts-expect-error missing declarations
-import * as snarkjs from 'snarkjs';
+
+import mainWitnessCalculator from '../public/Main_witness_calculator';
 
 const { chains, provider } = configureChains(
   [chain.localhost],
@@ -40,8 +40,24 @@ const wagmiClient = createClient({
 
 function Main(): JSX.Element {
   React.useEffect(() => void (async () => {
-    const { proof, publicSignals } = await snarkjs.groth16.fullProve({a: 3, b: 11}, "Main.wasm", "circuit_final.zkey");
-    console.log('hi');
+    // https://github.com/iden3/snarkjs/issues/126#issuecomment-1022877878
+    const x = await mainWitnessCalculator(
+      await fetch('/Main.wasm').then(e => e.arrayBuffer())
+    );
+
+    const witnessBuffer = (await x.calculateWTNSBin({a: 3, b: 11}, 0));
+    // @ts-ignore
+    const { proof, publicSignals } = await snarkjs.groth16.prove('/Main_final.zkey', witnessBuffer);
+
+    console.log(proof, publicSignals);
+
+    //// @ts-ignore
+    //const { proof, publicSignals } = await snarkjs.groth16.fullProve(
+    //  {a: 3, b: 11},
+    //  '/Main.wasm',
+    //  '/Main_final.zkey',
+    //);
+    //console.log(proof, publicSignals);
   })(), []);
   return <ConnectButton />;
 }

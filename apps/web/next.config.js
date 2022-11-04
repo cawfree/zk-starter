@@ -1,6 +1,11 @@
 module.exports = {
   reactStrictMode: true,
-  experimental: {
-    transpilePackages: [],
+  webpack: (config) => {
+    const experiments = config.experiments || {}
+    config.experiments = { ...experiments, asyncWebAssembly: true }
+    return config;
   },
+  experimental: {
+    transpilePackages: []
+  }
 };

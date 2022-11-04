@@ -1,2 +1,5 @@
-generated/
+public/*.wasm
+public/*.zkey
+public/*.js
+!public/*.min.js
 
