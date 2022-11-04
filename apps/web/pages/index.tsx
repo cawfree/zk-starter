@@ -13,10 +13,7 @@ const {
 
 export default function Main(): JSX.Element {
 
-  React.useEffect(() => void (async () => {
-    // Don't execute on the Next.js server.
-    if (typeof window === 'undefined') return;
-
+  const onAttemptVerify = React.useCallback(() => void (async () => {
     const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
     const wallet = new Wallet(
       ANVIL_DEFAULT_WALLET_PRIVATE_KEY_DO_NOT_USE_YOU_WILL_GET_REKT,
@@ -24,8 +21,8 @@ export default function Main(): JSX.Element {
     );
 
     const contract = new ethers.Contract(contractAddress, abi, wallet);
-    // TODO: turn this into a module
 
+    // TODO: turn this into a module
     const [wasm, verificationKey] = await Promise.all([
       fetch('/Main.wasm').then(e => e.arrayBuffer()),
       fetch('/Main_verification_key.json').then(e => e.json()),
@@ -52,5 +49,6 @@ export default function Main(): JSX.Element {
     console.log({isValid, current, next, proof, publicSignals});
   })(), []);
 
-  return <React.Fragment />;
+  // eslint-disable-next-line react/no-children-prop
+  return <button children="Verify" onClick={onAttemptVerify} />;
 }
