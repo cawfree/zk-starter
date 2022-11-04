@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.6.11;
+pragma solidity ^0.8.11;
 
-import "../../../build/contracts/MainVerifier.sol";
+import "./generated/MainVerifier.sol";
 
 contract Main {
     uint256 public number;

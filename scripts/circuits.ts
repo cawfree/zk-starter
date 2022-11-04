@@ -68,13 +68,23 @@ circuits.forEach((circuit: string) => {
     opts,
   );
 
-  const contractsDir = path.resolve('build', 'contracts');
+  const contractsDir = path.resolve('packages', 'ethereum', 'src', 'generated');
 
   if (!fs.existsSync(contractsDir)) fs.mkdirSync(contractsDir);
 
   // Export matching solidity verifier.
   child_process.execSync(
-    `yarn snarkjs zkey export solidityverifier build/${name}_final.zkey build/contracts/${name}Verifier.sol`,
+    `yarn snarkjs zkey export solidityverifier build/${name}_final.zkey ${path.resolve(contractsDir, `${name}Verifier.sol`)}`,
     opts,
   );
+
+  // Update the solidity version for compatibility with nested arrays.
+  child_process.execSync(
+    `sed -i.bak "s/0.6.11/0.8.11/g" ${path.resolve(contractsDir, `${name}Verifier.sol`)}`,
+    opts,
+  );
+
+  // Remove the backup.
+  fs.unlinkSync(path.resolve(contractsDir, `${name}Verifier.sol.bak`));
+
 });
