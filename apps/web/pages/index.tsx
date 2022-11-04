@@ -43,35 +43,32 @@ export default function Main(): JSX.Element {
     await contract.increment();
     const next = await contract.number();
 
-    const {
-      pi_a,
-      pi_b,
-      pi_c,
-      ...extras
-    } = proof;
 
-    // @ts-ignore
-    const calldata = await snarkjs.groth16.exportSolidityCallData(
-      {
-        ...extras,
-        pi_a: pi_a.map((e: unknown) => ethers.BigNumber.from(e).toHexString().substring(2)),
-        pi_b: pi_b.map((e: readonly unknown[]) => e.map((f: unknown) => ethers.BigNumber.from(f).toHexString().substring(2))),
-        pi_c: pi_c.map((e: unknown) => ethers.BigNumber.from(e).toHexString().substring(2)),
-      },
-      publicSignals,
-     );
+    //// @ts-ignore
+    //const calldata = await snarkjs.groth16.exportSolidityCallData(
+    //  {
+    //    ...extras,
+    //    pi_a: pi_a.map((e: unknown) => ethers.BigNumber.from(e).toHexString().substring(2)),
+    //    pi_b: pi_b.map((e: readonly unknown[]) => e.map((f: unknown) => ethers.BigNumber.from(f).toHexString().substring(2))),
+    //    pi_c: pi_c.map((e: unknown) => ethers.BigNumber.from(e).toHexString().substring(2)),
+    //  },
+    //  publicSignals,
+    // );
 
-    const solidityCallData = JSON.parse("[" + calldata + "]");
+    //const solidityCallData = JSON.parse("[" + calldata + "]");
 
-    console.log(solidityCallData);
+    //console.log(solidityCallData);
 
     // @ts-ignore
     const isValidLocal = await snarkjs.groth16.verify(verificationKey, publicSignals, proof);
-
+    console.log({isValidLocal});
     // @ts-ignore
-    const isValidEthereum = await contract.verifyProof(...solidityCallData);
+    console.log(await snarkjs.groth16.exportSolidityCallData(proof, publicSignals));
 
-    console.log({isValidLocal, isValidEthereum});
+    //// @ts-ignore
+    //const isValidEthereum = await contract.verifyProof(...solidityCallData);
+
+    //console.log({isValidLocal, isValidEthereum});
 
   })(), []);
 
