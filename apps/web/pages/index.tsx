@@ -43,10 +43,39 @@ export default function Main(): JSX.Element {
     await contract.increment();
     const next = await contract.number();
 
-    // @ts-ignore
-    const isValid = await snarkjs.groth16.verify(verificationKey, publicSignals, proof);
 
-    console.log({isValid, current, next, proof, publicSignals});
+    const {
+      pi_a,
+      pi_b,
+      pi_c,
+      ...extras
+    } = proof;
+
+    const betterProof = {
+      ...extras,
+      pi_a: pi_a.map((e: unknown) => ethers.BigNumber.from(e).toHexString().substring(2)),
+      pi_b: pi_b.map((e: readonly unknown[]) => e.map((f: unknown) => ethers.BigNumber.from(f).toHexString().substring(2))),
+      pi_c: pi_c.map((e: unknown) => ethers.BigNumber.from(e).toHexString().substring(2)),
+    };
+
+    console.log(proof);
+    //console.log(proof, betterProof);
+    // @ts-ignore
+    //console.log(snarkjs);
+    // @ts-ignore
+    const calldata = await snarkjs.groth16.exportSolidityCallData(betterProof, publicSignals);
+    const solidityCallData = JSON.parse("[" + calldata + "]");
+
+    console.log(solidityCallData);
+
+    //// @ts-ignore
+    //const didWork = await contract.verifyProof(
+    //  solidityCallData[0],
+    //  solidityCallData[0],
+    //  solidityCallData[0],
+    //  solidityCallData[0],
+    //);
+
   })(), []);
 
   // eslint-disable-next-line react/no-children-prop
