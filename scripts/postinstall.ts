@@ -30,6 +30,3 @@ if (!fs.existsSync(powersOfTauFinal))
 
 // Rebuild the circuits.
 child_process.execSync('yarn circuits', {stdio: 'inherit'});
-
-// Verify them.
-child_process.execSync('yarn witness', {stdio: 'inherit'});

@@ -31,6 +31,7 @@ const deploy = async ({
   fs.writeFileSync(
     path.resolve('dist', 'index.ts'),
     `
+// @ts-expect-error missing declaration
 const {abi, bytecode} = ${JSON.stringify(JSON.parse(fs.readFileSync(
   path.resolve('..', 'ethereum', 'out', `${contractName}.sol`, `${contractName}.json`),
  'utf-8',
