@@ -8,11 +8,13 @@ const ANVIL_DEFAULT_WALLET_PRIVATE_KEY_DO_NOT_USE_YOU_WILL_GET_REKT = '0xac0974b
 
 const deploy = async ({
   contractName,
+  url,
 }: {
   readonly contractName: string;
+  readonly url: string;
 }) => {
 
-  const provider = new ethers.providers.JsonRpcProvider('http://localhost:8545');
+  const provider = new ethers.providers.JsonRpcProvider(url);
   const wallet = new ethers.Wallet(ANVIL_DEFAULT_WALLET_PRIVATE_KEY_DO_NOT_USE_YOU_WILL_GET_REKT, provider);
 
   const {abi, bytecode} = JSON.parse(fs.readFileSync(
@@ -26,6 +28,15 @@ const deploy = async ({
   const {address: deploymentAddress} = contract;
 
   // TODO: create the package here
+  fs.writeFileSync(
+    path.resolve('dist', 'index.ts'),
+    `
+export const ${contractName} = Object.freeze({
+  rpcUrl: "${url}",
+  contractAddress: "${deploymentAddress}",
+});
+    `.trim(),
+  );
 
   console.log(`Deployed ${contractName}.sol to: ${deploymentAddress}!`);
 };
@@ -40,5 +51,11 @@ const pipe = (
 
 void (async () => Promise.all([
   pipe(child_process.exec('anvil')),
-  deploy({contractName: 'Main'}),
+
+  // Wait a little time to spin up the deployment.
+  new Promise(resolve => setTimeout(resolve, 1000))
+    .then(() => deploy({
+      contractName: 'Main',
+      url: 'http://localhost:8545',
+    })),
 ]))();

@@ -6,6 +6,6 @@ module.exports = {
     return config;
   },
   experimental: {
-    transpilePackages: []
+    transpilePackages: ["anvil"]
   }
 };

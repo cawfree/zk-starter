@@ -9,19 +9,25 @@ import {
 import {
   chain,
   configureChains,
-  createClient, useAccount, useContract, useProvider,
+  createClient,
+  useAccount,
+  useContract,
+  useProvider,
   WagmiConfig,
 } from 'wagmi';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
+import {Main as Environment} from 'anvil';
 
 import mainWitnessCalculator from '../public/Main_witness_calculator';
+
+const {rpcUrl, contractAddress} = Environment;
 
 const { chains, provider } = configureChains(
   [chain.localhost],
   [
     jsonRpcProvider({
       rpc: () => ({
-        http: 'http://localhost:8545',
+        http: rpcUrl,
       }),
     }),
   ]
