@@ -9,14 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@rainbow-me/rainbowkit": "0.7.4",
+    "anvil": "*",
     "ethers": "5.7.2",
     "next": "13.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "anvil": "*",
-    "snarkjs": "0.5.0",
-    "wagmi": "0.7.10"
+    "snarkjs": "0.5.0"
   },
   "devDependencies": {
     "@babel/core": "7.19.6",

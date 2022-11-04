@@ -31,7 +31,15 @@ const deploy = async ({
   fs.writeFileSync(
     path.resolve('dist', 'index.ts'),
     `
+const {abi, bytecode} = ${JSON.stringify(JSON.parse(fs.readFileSync(
+  path.resolve('..', 'ethereum', 'out', `${contractName}.sol`, `${contractName}.json`),
+ 'utf-8',
+)))};
+    
 export const ${contractName} = Object.freeze({
+  ANVIL_DEFAULT_WALLET_PRIVATE_KEY_DO_NOT_USE_YOU_WILL_GET_REKT: "${ANVIL_DEFAULT_WALLET_PRIVATE_KEY_DO_NOT_USE_YOU_WILL_GET_REKT}",
+  abi,
+  bytecode,
   rpcUrl: "${url}",
   contractAddress: "${deploymentAddress}",
 });

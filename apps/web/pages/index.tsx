@@ -1,82 +1,56 @@
-import '@rainbow-me/rainbowkit/styles.css';
-
 import * as React from 'react';
-import {
-  ConnectButton,
-  getDefaultWallets,
-  RainbowKitProvider,
-} from '@rainbow-me/rainbowkit';
-import {
-  chain,
-  configureChains,
-  createClient,
-  useAccount,
-  useContract,
-  useProvider,
-  WagmiConfig,
-} from 'wagmi';
-import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 import {Main as Environment} from 'anvil';
 
 import mainWitnessCalculator from '../public/Main_witness_calculator';
+import {ethers, Wallet} from 'ethers';
 
-const {rpcUrl, contractAddress} = Environment;
+const {
+  ANVIL_DEFAULT_WALLET_PRIVATE_KEY_DO_NOT_USE_YOU_WILL_GET_REKT,
+  rpcUrl,
+  contractAddress,
+  abi,
+} = Environment;
 
-const { chains, provider } = configureChains(
-  [chain.localhost],
-  [
-    jsonRpcProvider({
-      rpc: () => ({
-        http: rpcUrl,
-      }),
-    }),
-  ]
-);
-
-const { connectors } = getDefaultWallets({
-  appName: 'zk-starter',
-  chains
-});
-
-const wagmiClient = createClient({
-  autoConnect: false,
-  connectors,
-  provider
-});
-
-function Main(): JSX.Element {
-
-  const account = useAccount();
-
-  //// TODO: export the bytecode and address to some shared config
-  //const contract = useContract({
-  //  address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-  //  abi: ensRegistryABI,
-  //})
+export default function Main(): JSX.Element {
 
   React.useEffect(() => void (async () => {
-    // https://github.com/iden3/snarkjs/issues/126#issuecomment-1022877878
-    const x = await mainWitnessCalculator(
-      await fetch('/Main.wasm').then(e => e.arrayBuffer())
+    // Don't execute on the Next.js server.
+    if (typeof window === 'undefined') return;
+
+    const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
+    const wallet = new Wallet(
+      ANVIL_DEFAULT_WALLET_PRIVATE_KEY_DO_NOT_USE_YOU_WILL_GET_REKT,
+      provider,
     );
 
-    const witnessBuffer = (await x.calculateWTNSBin({a: 3, b: 11}, 0));
+    const contract = new ethers.Contract(contractAddress, abi, wallet);
+    // TODO: turn this into a module
+
+    const [wasm, verificationKey] = await Promise.all([
+      fetch('/Main.wasm').then(e => e.arrayBuffer()),
+      fetch('/Main_verification_key.json').then(e => e.json()),
+    ]);
+
+    // https://github.com/iden3/snarkjs/issues/126#issuecomment-1022877878
+    const witnessCalculator = await mainWitnessCalculator(wasm);
+
+    const witnessBuffer = await witnessCalculator.calculateWTNSBin(
+      {a: 3, b: 11},
+      0,
+    );
+
     // @ts-ignore
     const { proof, publicSignals } = await snarkjs.groth16.prove('/Main_final.zkey', witnessBuffer);
 
+    const current = await contract.number();
+    await contract.increment();
+    const next = await contract.number();
 
-    console.log(proof, publicSignals);
-  })(), [account]);
+    // @ts-ignore
+    const isValid = await snarkjs.groth16.verify(verificationKey, publicSignals, proof);
 
-  return <ConnectButton />;
-}
+    console.log({isValid, current, next, proof, publicSignals});
+  })(), []);
 
-export default function App() {
-  return (
-    <WagmiConfig client={wagmiClient}>
-      <RainbowKitProvider chains={chains}>
-        <Main />
-      </RainbowKitProvider>
-    </WagmiConfig>
-  );
+  return <React.Fragment />;
 }

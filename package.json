@@ -9,7 +9,6 @@
   "scripts": {
     "postinstall": "node_modules/.bin/ts-node scripts/postinstall",
     "circuits": "node_modules/.bin/ts-node scripts/circuits",
-    "witness": "node_modules/.bin/ts-node scripts/witness",
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",

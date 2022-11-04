@@ -105,5 +105,9 @@ circuits.forEach((circuit: string) => {
     opts,
   );
 
+  child_process.execSync(
+    `cp -rf ${path.resolve('build', `${name}_verification_key.json`)} ${publicDir}/`,
+    opts,
+  );
 
 });
