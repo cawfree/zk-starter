@@ -1,15 +1,16 @@
 import '@rainbow-me/rainbowkit/styles.css';
 
+import * as React from 'react';
 import {
-    ConnectButton,
-    getDefaultWallets,
-    RainbowKitProvider,
+  ConnectButton,
+  getDefaultWallets,
+  RainbowKitProvider,
 } from '@rainbow-me/rainbowkit';
 import {
-    chain,
-    configureChains,
-    createClient,
-    WagmiConfig,
+  chain,
+  configureChains,
+  createClient,
+  WagmiConfig,
 } from 'wagmi';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 
@@ -35,11 +36,18 @@ const wagmiClient = createClient({
   provider
 });
 
-export default function Web() {
+function Main(): JSX.Element {
+  React.useEffect(() => {
+    console.log('hi');
+  }, []);
+  return <ConnectButton />;
+}
+
+export default function App() {
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains}>
-        <ConnectButton />
+        <Main />
       </RainbowKitProvider>
     </WagmiConfig>
   );
