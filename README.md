@@ -7,10 +7,11 @@ Essentially, it's [__zero knowledge__](https://en.wikipedia.org/wiki/Zero-knowle
 ### Getting Started
 
 1. Clone the repository using `git clone https://github.com/cawfree/zk-starter`.
-2. Make sure you've installed [__Rust__](https://www.rust-lang.org/):
+2. Make sure you've installed [__Rust__](https://www.rust-lang.org/) and [__Foundry__](https://github.com/foundry-rs/foundry):
 
 ```shell
 curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh # install rust
+curl -L https://foundry.paradigm.xyz | bash # install foundry
 ```
 3. Run `yarn`, which will install [`circom`](https://docs.circom.io/) and automate a new [__Powers of Tau__](https://zkproof.org/2021/06/30/setup-ceremonies/#:~:text=The%20first%20phase%20referred%20to,NP%2Drelation%2Dspecific%20CRS.) ceremony.
  
