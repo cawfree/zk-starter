@@ -17,7 +17,7 @@ curl -L https://foundry.paradigm.xyz | bash # install foundry
  
 > All the build artifacts are cached, so you'll only be required to do this once-per-installation. If you'd like to use a larger number of constraints for your `.ptau`, you can download and verify results from public ceremonies [__here__](https://www.dropbox.com/sh/mn47gnepqu88mzl/AACaJkBU7mmCq8uU8ml0-0fma?dl=0).
 
-4. Finally, run `yarn dev` to run execute the stack on your [`localhost`](http://localhost:3000).
+4. Finally, run `yarn dev` to run execute the entire stack on your [`localhost`](http://localhost:3000).
 
 ### Commands (For now)
 - `anvil` local node
