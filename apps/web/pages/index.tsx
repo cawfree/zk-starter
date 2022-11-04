@@ -9,7 +9,7 @@ import {
 import {
   chain,
   configureChains,
-  createClient,
+  createClient, useProvider,
   WagmiConfig,
 } from 'wagmi';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
@@ -39,6 +39,9 @@ const wagmiClient = createClient({
 });
 
 function Main(): JSX.Element {
+
+  const provider = useProvider();
+
   React.useEffect(() => void (async () => {
     // https://github.com/iden3/snarkjs/issues/126#issuecomment-1022877878
     const x = await mainWitnessCalculator(
@@ -50,15 +53,8 @@ function Main(): JSX.Element {
     const { proof, publicSignals } = await snarkjs.groth16.prove('/Main_final.zkey', witnessBuffer);
 
     console.log(proof, publicSignals);
+  })(), [provider]);
 
-    //// @ts-ignore
-    //const { proof, publicSignals } = await snarkjs.groth16.fullProve(
-    //  {a: 3, b: 11},
-    //  '/Main.wasm',
-    //  '/Main_final.zkey',
-    //);
-    //console.log(proof, publicSignals);
-  })(), []);
   return <ConnectButton />;
 }
 
