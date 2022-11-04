@@ -9,7 +9,7 @@ import {
 import {
   chain,
   configureChains,
-  createClient, useProvider,
+  createClient, useAccount, useContract, useProvider,
   WagmiConfig,
 } from 'wagmi';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
@@ -40,7 +40,13 @@ const wagmiClient = createClient({
 
 function Main(): JSX.Element {
 
-  const provider = useProvider();
+  const account = useAccount();
+
+  //// TODO: export the bytecode and address to some shared config
+  //const contract = useContract({
+  //  address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+  //  abi: ensRegistryABI,
+  //})
 
   React.useEffect(() => void (async () => {
     // https://github.com/iden3/snarkjs/issues/126#issuecomment-1022877878
@@ -52,8 +58,9 @@ function Main(): JSX.Element {
     // @ts-ignore
     const { proof, publicSignals } = await snarkjs.groth16.prove('/Main_final.zkey', witnessBuffer);
 
+
     console.log(proof, publicSignals);
-  })(), [provider]);
+  })(), [account]);
 
   return <ConnectButton />;
 }
