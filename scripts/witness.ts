@@ -56,11 +56,14 @@ void (async () => {
 
   const verificationKey = path.resolve('build', `${circuit}_verification_key.json`);
 
+
   const res = await snarkjs.groth16.verify(
     JSON.parse(fs.readFileSync(verificationKey, 'utf-8')),
     JSON.parse(fs.readFileSync(pub, 'utf-8')),
     JSON.parse(fs.readFileSync(proof, 'utf-8')),
   );
+
+  console.log(fs.readFileSync(proof, 'utf-8'));
 
   const success = res === true;
 

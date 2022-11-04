@@ -25,4 +25,19 @@ contract MainTest is Test {
         main.setNumber(x);
         assertEq(main.number(), x);
     }
+
+    function testVerifier() public {
+        assertEq(true, true);
+        // 3, 11.
+        //assertEq(
+        //  verifier.verifyProof(
+        //    a,
+        //    b,
+        //    c,
+        //    input
+        //  ),
+        //  true
+        //);
+    }
+
 }
