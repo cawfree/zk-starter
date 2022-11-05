@@ -25,7 +25,7 @@ curl -L https://foundry.paradigm.xyz | bash # install foundry
 
 `zk-starter`'s build life cycle ensures that for each new arithmetic circuit you build, a corresponding [__Solidity__](https://docs.soliditylang.org/en/v0.8.17/) smart contract which inherits a compatible verifier will also be initialized for you to extend.
 
-Likewise, for every circuit you create, a high-level utility library is injected into the applicaton frontend at compile time; this provides high level functions for generating proofs, verifying proofs, and generating compatible calldata for verification.
+Likewise, for every circuit you create, a high-level utility library is injected into the applicaton frontend at compile time; this provides high level functions for generating proofs, verifying proofs, and generating compatible calldata for on-chain verification.
 
 ### 🙏 Attribution
 
