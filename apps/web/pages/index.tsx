@@ -4,49 +4,17 @@ import {Main as Environment} from 'foundry';
 import * as ffjavascript from 'ffjavascript';
 
 import mainWitnessCalculator from '../public/Main_witness_calculator';
-import {ethers, Wallet} from 'ethers';
+import {ethers} from 'ethers';
 import {ConnectButton} from '@rainbow-me/rainbowkit';
 import {useAccount, useProvider, useSigner} from "wagmi";
 
-const {
-  ANVIL_DEFAULT_WALLET_PRIVATE_KEY_DO_NOT_USE_YOU_WILL_GET_REKT,
-  contractAddress,
-  abi,
-} = Environment;
-
-const deployEther = async ({
-  to,
-  provider,
-  amount = ethers.utils.parseEther('1'),
-}: {
-  readonly to: string;
-  readonly provider: ethers.providers.Provider;
-  readonly amount?: ethers.BigNumber;
-}) => {
-  const wallet = new Wallet(
-    ANVIL_DEFAULT_WALLET_PRIVATE_KEY_DO_NOT_USE_YOU_WILL_GET_REKT,
-    provider,
-  );
-
-  const signedTransaction = await wallet.signTransaction(
-    await wallet.populateTransaction({
-      to,
-      value: amount,
-      chainId: (await provider.getNetwork()).chainId,
-    })
-  );
-
-  return provider.sendTransaction(signedTransaction);
-};
+const {contractAddress, abi, deployEtherFromFaucet} = Environment;
 
 export default function Main(): JSX.Element {
 
   const {isConnected} = useAccount();
   const provider = useProvider();
-  const {data: signer} = useSigner({
-    // TODO: config
-    //chainId: 1337,
-  });
+  const {data: signer} = useSigner();
 
   const onAttemptVerify = React.useCallback(() => void (async () => {
 
@@ -55,7 +23,7 @@ export default function Main(): JSX.Element {
     const signerAddress = await signer.getAddress();
 
     // Give the wallet a little ether from the master wallet for the transaction.
-    await deployEther({to: signerAddress, provider});
+    await deployEtherFromFaucet({to: signerAddress, provider});
 
     const contract = new ethers.Contract(contractAddress, abi, signer);
     const currentSignerBalance = ethers.utils.formatEther(await provider.getBalance(signerAddress));

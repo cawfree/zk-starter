@@ -33,18 +33,45 @@ const deploy = async ({
   fs.writeFileSync(
     path.resolve('dist', 'index.ts'),
     `
+import {ethers, Wallet} from 'ethers';
+
 // @ts-expect-error missing declaration
 const {abi, bytecode} = ${JSON.stringify(JSON.parse(fs.readFileSync(
   path.resolve('..', 'foundry', 'out', `${contractName}.sol`, `${contractName}.json`),
  'utf-8',
 )))};
+
+const ANVIL_DEFAULT_WALLET_PRIVATE_KEY_DO_NOT_USE_YOU_WILL_GET_REKT = "${ANVIL_DEFAULT_WALLET_PRIVATE_KEY_DO_NOT_USE_YOU_WILL_GET_REKT}";
+
+const deployEtherFromFaucet = async ({
+  to,
+  provider,
+  amount = ethers.utils.parseEther('1'),
+}: {
+  readonly to: string;
+  readonly provider: ethers.providers.Provider;
+  readonly amount?: ethers.BigNumber;
+}) => {
+  const wallet = new Wallet(
+    ANVIL_DEFAULT_WALLET_PRIVATE_KEY_DO_NOT_USE_YOU_WILL_GET_REKT,
+    provider,
+  );
+  const signedTransaction = await wallet.signTransaction(
+    await wallet.populateTransaction({
+      to,
+      value: amount,
+      chainId: (await provider.getNetwork()).chainId,
+    })
+  );
+  return provider.sendTransaction(signedTransaction);
+};
     
 export const ${contractName} = Object.freeze({
-  ANVIL_DEFAULT_WALLET_PRIVATE_KEY_DO_NOT_USE_YOU_WILL_GET_REKT: "${ANVIL_DEFAULT_WALLET_PRIVATE_KEY_DO_NOT_USE_YOU_WILL_GET_REKT}",
   abi,
   bytecode,
   rpcUrl: "${url}",
   contractAddress: "${deploymentAddress}",
+  deployEtherFromFaucet,
 });
     `.trim(),
   );
