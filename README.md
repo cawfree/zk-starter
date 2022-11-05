@@ -21,7 +21,7 @@ curl -L https://foundry.paradigm.xyz | bash # install foundry
 
 ### Attribution
 
-This monorepo was inspired by [__BattleZips 🏴‍☠️__](https://twitter.com/Battlezips) ([__Git__](https://github.com/BattleZips/BattleZips)). Thank you for further democratizing access to the state-of-the-art in modern cryptography, and helping humans continue to live safer self-sovereign digital existences.
+This monorepo was inspired by [__BattleZips 🏴‍☠️__](https://twitter.com/Battlezips) ([__Git__](https://github.com/BattleZips/BattleZips)). Thank you for helping increase the accessibility of the state-of-the-art in modern cryptography.
 
 ### License
 [__MIT__](./LICENSE)
