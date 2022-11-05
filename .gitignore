@@ -32,3 +32,6 @@ yarn-error.log*
 # zk
 zk/*
 
+# WebStorm IDE
+.idea/
+
