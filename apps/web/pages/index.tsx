@@ -92,7 +92,7 @@ export default function Main(): JSX.Element {
             We can use adversarial incentivised networks like <a href="https://ethereum.org">Ethereum</a> to perform computation with very strong guarantees of correctness, immutability and verifiability.
           </p>
           <p>
-            Although the security and resilience of public blockchains are indeed thanks to their open nature, humans nonetheless have a fundamental right to privacy. Similarly, increasing competition for block space and the subsequent rise in gas fees demand that we take more computation and data off-chain without compromising on our stringent operational expectations.
+            Although the security and resilience of public blockchains are indeed thanks to their open nature, humans nonetheless have a fundamental right to privacy. Similarly, increasing competition for block space and the subsequent rise in gas fees demand that we move more computation and storage off-chain, without compromising on our stringent operational expectations.
           </p>
           <p>
             A zero knowledge proof is a goldilocks paradigm, an inexplicable feature of the mathematics of the universe which helps us all operate privately, securely, trustlessly, minimally, with integrity; and above all else, in plain sight.
