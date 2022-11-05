@@ -68,14 +68,21 @@ export default function Main(): JSX.Element {
     console.log({isValidEthereum});
   })(), [provider, signer]);
 
-  if (!isConnected) return <ConnectButton />;
-
   return (
-    <div>
-      connected
-      <button onClick={onAttemptVerify}>
-        run verifiable computation
-      </button>
-    </div>
+    <>
+      <div className="min-h-screen min-w-screen py-4 px-4">
+        <article className="container prose lg:prose-xl">
+          <h1>Welcome to zk-starter!</h1>
+          {isConnected ? (
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+              Execute Zero Knowledge Proof
+            </button>
+          ) : (
+            <ConnectButton />
+          )}
+        </article>
+      </div>
+    </>
+
   );
 }
