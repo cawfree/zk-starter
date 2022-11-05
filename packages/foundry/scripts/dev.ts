@@ -149,7 +149,7 @@ const pipe = (
 
 child_process.execSync('forge build', {stdio: 'inherit'});
 
-const contractNames = fs.readdirSync(path.resolve('..', 'circuits'))
+const contractNames = fs.readdirSync(path.resolve('circuits'))
   .filter(e => e.endsWith('.circom'))
   .map(e => e.substring(0, e.lastIndexOf('.circom')));
 
