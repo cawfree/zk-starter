@@ -35,6 +35,7 @@ const deployContractsAndWriteModule = async ({
   readonly contractNames: readonly string[];
   readonly url: string;
 }) => {
+
   const {
     contractNameToDeploymentAddress,
   } = await deployContractsByName({contractNames, url});
@@ -46,6 +47,7 @@ const deployContractsAndWriteModule = async ({
     path.resolve('dist', 'index.ts'),
     `
 import {ethers, Wallet} from 'ethers';
+import * as ffjavascript from 'ffjavascript';
 
 const ANVIL_DEFAULT_WALLET_PRIVATE_KEY_DO_NOT_USE_YOU_WILL_GET_REKT = "${ANVIL_DEFAULT_WALLET_PRIVATE_KEY_DO_NOT_USE_YOU_WILL_GET_REKT}";
 
@@ -72,6 +74,32 @@ const deployEtherFromFaucet = async ({
   return provider.sendTransaction(signedTransaction);
 };
 
+${contractNames
+  .map(
+    (contractName: string) => {
+      const witnessCalculatorExport = fs.readFileSync(
+        path.resolve('..', '..', 'build', `${contractName}_js`, 'witness_calculator.js'),
+        'utf-8',
+      );
+      return [
+        `function ${contractName}WitnessCalculatorThunk() {`,
+        `  ${witnessCalculatorExport.substring('module.exports = '.length)}`,
+        '  return async () => {',
+        '    const [wasm, verificationKey] = await Promise.all([',
+        `      fetch(\'/${contractName}.wasm\').then(e => e.arrayBuffer()),`,
+        `      fetch(\'/${contractName}_verification_key.json\').then(e => e.json()),`,
+        '    ]);',
+        '    // @ts-expect-error missing-parameter',
+        '    const witnessCalculator = await builder(wasm);',
+        '    return {witnessCalculator, verificationKey};',
+        '  }',
+        '}',
+      ].join('\n');
+    },
+  )
+  .join('\n')
+}
+
 ${contractNames.map((contractName: string) => `
 export const ${contractName} = Object.freeze({
   ...${JSON.stringify(JSON.parse(fs.readFileSync(
@@ -81,6 +109,7 @@ export const ${contractName} = Object.freeze({
   rpcUrl: "${url}",
   contractAddress: "${contractNameToDeploymentAddress[contractName]}",
   deployEtherFromFaucet,
+  createZeroKnowledgeHelpersAsync: ${contractName}WitnessCalculatorThunk(),
 });
   `.trim(),
 )}

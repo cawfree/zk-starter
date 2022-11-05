@@ -3,7 +3,6 @@ import {Main as Environment} from 'foundry';
 // @ts-expect-error missing-declaration
 import * as ffjavascript from 'ffjavascript';
 
-import mainWitnessCalculator from '../public/Main_witness_calculator';
 import {ethers} from 'ethers';
 import {ConnectButton} from '@rainbow-me/rainbowkit';
 import {useAccount, useProvider, useSigner} from "wagmi";
@@ -12,6 +11,7 @@ const {
   contractAddress,
   abi,
   deployEtherFromFaucet,
+  createZeroKnowledgeHelpersAsync,
 } = Environment;
 
 type Result = {
@@ -40,14 +40,7 @@ export default function Main(): JSX.Element {
 
     console.log({currentSignerBalance});
 
-    // TODO: turn this into a module
-    const [wasm, verificationKey] = await Promise.all([
-      fetch('/Main.wasm').then(e => e.arrayBuffer()),
-      fetch('/Main_verification_key.json').then(e => e.json()),
-    ]);
-
-    // https://github.com/iden3/snarkjs/issues/126#issuecomment-1022877878
-    const witnessCalculator = await mainWitnessCalculator(wasm);
+    const {witnessCalculator, verificationKey} = await createZeroKnowledgeHelpersAsync();
 
     const witnessBuffer = await witnessCalculator.calculateWTNSBin(
       {a: 3, b: 11},

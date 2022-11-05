@@ -95,10 +95,10 @@ circuits.forEach((circuit: string) => {
     opts,
   );
 
-  child_process.execSync(
-    `cp -rf ${path.resolve('build', `${name}_js`, 'witness_calculator.js')} ${path.resolve(publicDir, `${name}_witness_calculator.js`)}`,
-    opts,
-  );
+  //child_process.execSync(
+  //  `cp -rf ${path.resolve('build', `${name}_js`, 'witness_calculator.js')} ${path.resolve(publicDir, `${name}_witness_calculator.js`)}`,
+  //  opts,
+  //);
 
   child_process.execSync(
     `cp -rf ${path.resolve('build', `${name}_final.zkey`)} ${publicDir}/`,
