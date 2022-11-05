@@ -63,7 +63,7 @@ const pipe = (
 child_process.execSync('forge build', {stdio: 'inherit'});
 
 void (async () => Promise.all([
-  pipe(child_process.exec('anvil')),
+  pipe(child_process.exec('anvil --chain-id 1337')),
 
   // Wait a little time to spin up the deployment.
   new Promise(resolve => setTimeout(resolve, 1000))

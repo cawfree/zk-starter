@@ -5,29 +5,62 @@ import * as ffjavascript from 'ffjavascript';
 
 import mainWitnessCalculator from '../public/Main_witness_calculator';
 import {ethers, Wallet} from 'ethers';
+import {ConnectButton} from '@rainbow-me/rainbowkit';
+import {useAccount, useProvider, useSigner} from "wagmi";
 
 const {
   ANVIL_DEFAULT_WALLET_PRIVATE_KEY_DO_NOT_USE_YOU_WILL_GET_REKT,
-  rpcUrl,
   contractAddress,
   abi,
 } = Environment;
 
+const deployEther = async ({
+  to,
+  provider,
+  amount = ethers.utils.parseEther('1'),
+}: {
+  readonly to: string;
+  readonly provider: ethers.providers.Provider;
+  readonly amount?: ethers.BigNumber;
+}) => {
+  const wallet = new Wallet(
+    ANVIL_DEFAULT_WALLET_PRIVATE_KEY_DO_NOT_USE_YOU_WILL_GET_REKT,
+    provider,
+  );
+
+  const signedTransaction = await wallet.signTransaction(
+    await wallet.populateTransaction({
+      to,
+      value: amount,
+      chainId: (await provider.getNetwork()).chainId,
+    })
+  );
+
+  return provider.sendTransaction(signedTransaction);
+};
+
 export default function Main(): JSX.Element {
 
+  const {isConnected} = useAccount();
+  const provider = useProvider();
+  const {data: signer} = useSigner({
+    // TODO: config
+    //chainId: 1337,
+  });
+
   const onAttemptVerify = React.useCallback(() => void (async () => {
-    const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
-    const wallet = new Wallet(
-      ANVIL_DEFAULT_WALLET_PRIVATE_KEY_DO_NOT_USE_YOU_WILL_GET_REKT,
-      provider,
-    );
 
-    const contract = new ethers.Contract(contractAddress, abi, wallet);
+    if (!signer) throw new Error(`Expected signer, found "${String(signer)}".`);
 
-    const before = await contract.number();
-    await contract.increment();
-    const after = await contract.number();
-    console.log({before, after});
+    const signerAddress = await signer.getAddress();
+
+    // Give the wallet a little ether from the master wallet for the transaction.
+    await deployEther({to: signerAddress, provider});
+
+    const contract = new ethers.Contract(contractAddress, abi, signer);
+    const currentSignerBalance = ethers.utils.formatEther(await provider.getBalance(signerAddress));
+
+    console.log({currentSignerBalance});
 
     // TODO: turn this into a module
     const [wasm, verificationKey] = await Promise.all([
@@ -39,8 +72,8 @@ export default function Main(): JSX.Element {
     const witnessCalculator = await mainWitnessCalculator(wasm);
 
     const witnessBuffer = await witnessCalculator.calculateWTNSBin(
-      {a: 3, b: 11},
-      0,
+        {a: 3, b: 11},
+        0,
     );
 
     // @ts-ignore
@@ -61,8 +94,16 @@ export default function Main(): JSX.Element {
 
     const isValidEthereum = await contract.verifyProof(...JSON.parse(`[${calldata}]`));
     console.log({isValidEthereum});
-  })(), []);
+  })(), [provider, signer]);
 
-  // eslint-disable-next-line react/no-children-prop
-  return <button children="Verify" onClick={onAttemptVerify} />;
+  if (!isConnected) return <ConnectButton />;
+
+  return (
+    <div>
+      connected
+      <button onClick={onAttemptVerify}>
+        run verifiable computation
+      </button>
+    </div>
+  );
 }
