@@ -74,7 +74,9 @@ export default function Main(): JSX.Element {
         <article className="container prose lg:prose-xl">
           <h1>Welcome to zk-starter!</h1>
           {isConnected ? (
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+            <button
+              onClick={onAttemptVerify}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
               Execute Zero Knowledge Proof
             </button>
           ) : (
