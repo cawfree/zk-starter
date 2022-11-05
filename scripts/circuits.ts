@@ -71,34 +71,48 @@ circuits.forEach((circuit: string) => {
     opts,
   );
 
-  const contractsDir = path.resolve('packages', 'foundry', 'src', 'generated');
-  if (!fs.existsSync(contractsDir)) fs.mkdirSync(contractsDir);
+  const contractsDir = path.resolve('packages', 'foundry', 'src');
+  const generatedContractsDir = path.resolve(contractsDir, 'generated');
+
+  if (!fs.existsSync(generatedContractsDir)) fs.mkdirSync(generatedContractsDir);
 
   // Export matching solidity verifier.
   child_process.execSync(
-    `yarn snarkjs zkey export solidityverifier build/${name}_final.zkey ${path.resolve(contractsDir, `${name}Verifier.sol`)}`,
+    `yarn snarkjs zkey export solidityverifier build/${name}_final.zkey ${path.resolve(generatedContractsDir, `${name}Verifier.sol`)}`,
     opts,
   );
 
   // Update the solidity version for compatibility with nested arrays.
   child_process.execSync(
-    `sed -i.bak "s/0.6.11/0.8.11/g" ${path.resolve(contractsDir, `${name}Verifier.sol`)}`,
+    `sed -i.bak "s/0.6.11/0.8.11/g" ${path.resolve(generatedContractsDir, `${name}Verifier.sol`)}`,
     opts,
   );
 
   // Remove the backup.
-  fs.unlinkSync(path.resolve(contractsDir, `${name}Verifier.sol.bak`));
+  fs.unlinkSync(path.resolve(generatedContractsDir, `${name}Verifier.sol.bak`));
 
+  const smartContractForVerifier = path.resolve(contractsDir, `${name}.sol`);
+
+  // TODO: Here we could create working tests for proofs, too...
+
+  // Ensure there's a matching smart contract for this circuit.
+  if (!fs.existsSync(smartContractForVerifier))
+    fs.writeFileSync(
+      smartContractForVerifier,
+      `
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.11;
+
+import "./generated/${name}Verifier.sol";
+
+contract ${name} is Verifier {}
+      `.trim(),
+    );
 
   child_process.execSync(
     `cp -rf ${path.resolve('build', `${name}_js`, `${name}.wasm`)} ${publicDir}/`,
     opts,
   );
-
-  //child_process.execSync(
-  //  `cp -rf ${path.resolve('build', `${name}_js`, 'witness_calculator.js')} ${path.resolve(publicDir, `${name}_witness_calculator.js`)}`,
-  //  opts,
-  //);
 
   child_process.execSync(
     `cp -rf ${path.resolve('build', `${name}_final.zkey`)} ${publicDir}/`,
