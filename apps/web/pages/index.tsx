@@ -1,7 +1,5 @@
 import * as React from 'react';
 import {Main} from 'foundry';
-// @ts-expect-error missing-declaration
-import * as ffjavascript from 'ffjavascript';
 
 import {ethers} from 'ethers';
 import {ConnectButton} from '@rainbow-me/rainbowkit';
@@ -40,30 +38,15 @@ export default function App(): JSX.Element {
 
     console.log({currentSignerBalance});
 
-    const {witnessCalculator, verificationKey} = await createZeroKnowledgeHelpersAsync();
+    const {createProofAndPublicSignals} = await createZeroKnowledgeHelpersAsync();
+    const {checkIsProofValid, exportSolidityCallData} = await createProofAndPublicSignals({
+      inputSignals: {a: 3, b: 11},
+    });
 
-    const witnessBuffer = await witnessCalculator.calculateWTNSBin(
-      {a: 3, b: 11},
-      0,
-    );
-
-    // @ts-ignore
-    const { proof, publicSignals } = await snarkjs.groth16.prove('/Main_final.zkey', witnessBuffer);
-
-    // @ts-ignore
-    const {unstringifyBigInts} = ffjavascript.utils;
-    // @ts-ignore
-    const isValidLocal = await snarkjs.groth16.verify(verificationKey, publicSignals, proof);
+    const isValidLocal = await checkIsProofValid();
     console.log({isValidLocal});
 
-    // https://gist.github.com/chnejohnson/c6d76ef15c108464539de535d48a7f9b
-    // @ts-ignore
-    const calldata = await snarkjs.groth16.exportSolidityCallData(
-      unstringifyBigInts(proof),
-      unstringifyBigInts(publicSignals)
-    );
-
-    const isValidEthereum = await contract.verifyProof(...JSON.parse(`[${calldata}]`));
+    const isValidEthereum = await contract.verifyProof(...(await exportSolidityCallData()));
 
     console.log({isValidEthereum});
 
