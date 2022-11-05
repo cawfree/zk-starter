@@ -4,7 +4,7 @@ The easiest way to integrate succinct verifiable on-chain computation using hidd
 
 Essentially, it's [__zero knowledge__](https://en.wikipedia.org/wiki/Zero-knowledge_proof) for those with zero knowledge.
 
-### Getting Started
+### 🚀 Getting Started
 
 1. Clone the repository using `git clone https://github.com/cawfree/zk-starter`.
 2. Make sure you've installed [__Rust__](https://www.rust-lang.org/) and [__Foundry__](https://github.com/foundry-rs/foundry):
@@ -19,9 +19,9 @@ curl -L https://foundry.paradigm.xyz | bash # install foundry
 
 4. Finally, run `yarn dev` to execute the entire stack on [`http://localhost:3000`](http://localhost:3000). This will redeploy the auto-generated [__verifier logic__](https://docs.circom.io/getting-started/proving-circuits/) made available to your [__smart contracts__](https://ethereum.org/en/developers/docs/smart-contracts/) on the local chain ([`anvil`](https://github.com/foundry-rs/foundry)) and inject the relevant configuration properties into your frontend.
 
-### Attribution
+### 🙏 Attribution
 
 This monorepo was inspired by [__BattleZips 🏴‍☠️__](https://twitter.com/Battlezips) ([__Git__](https://github.com/BattleZips/BattleZips)). Thank you for helping increase the accessibility of the state-of-the-art in modern cryptography.
 
-### License
+### ✌️ License
 [__MIT__](./LICENSE)
