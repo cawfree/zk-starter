@@ -21,9 +21,11 @@ curl -L https://foundry.paradigm.xyz | bash # install foundry
 
 4. Finally, run `yarn dev` to execute the entire stack on [`http://localhost:3000`](http://localhost:3000). This will redeploy the auto-generated [__verifier logic__](https://docs.circom.io/getting-started/proving-circuits/) made available to your [__smart contracts__](https://ethereum.org/en/developers/docs/smart-contracts/) on the [`anvil`](https://github.com/foundry-rs/foundry) local chain and inject the relevant configuration properties into your frontend.
 
-### ♻️ Lifecyle
+### ♻️ Adding New Circuits
 
-`zk-starter`'s build life cycle ensures that for each new arithmetic circuit you build, a corresponding [__Solidity__](https://docs.soliditylang.org/en/v0.8.17/) smart contract which inherits a compatible verifier will also be initialized for you to extend. Likewise, for each circuit you create, a matching utility library is presented to the applicaton frontend application compile time. This provides namespaced high-level functions for generating and verifying proofs, and abstracting away the complexity of smart contract invocation for on-chain verification.
+`zk-starter`'s build life cycle ensures that for each new arithmetic circuit you build, a corresponding [__Solidity__](https://docs.soliditylang.org/en/v0.8.17/) smart contract which inherits a compatible verifier will also be initialized for you to extend.
+
+Likewise, for each circuit you create, a matching utility library is presented to the applicaton frontend application compile time. This provides namespaced high-level functions for generating and verifying proofs, and abstracting away the complexity of smart contract invocation for on-chain verification.
 
 ### 🙏 Attribution
 
