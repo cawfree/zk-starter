@@ -8,7 +8,11 @@ import {ethers} from 'ethers';
 import {ConnectButton} from '@rainbow-me/rainbowkit';
 import {useAccount, useProvider, useSigner} from "wagmi";
 
-const {contractAddress, abi, deployEtherFromFaucet} = Environment;
+const {
+  contractAddress,
+  abi,
+  deployEtherFromFaucet,
+} = Environment;
 
 export default function Main(): JSX.Element {
 
@@ -40,8 +44,8 @@ export default function Main(): JSX.Element {
     const witnessCalculator = await mainWitnessCalculator(wasm);
 
     const witnessBuffer = await witnessCalculator.calculateWTNSBin(
-        {a: 3, b: 11},
-        0,
+      {a: 3, b: 11},
+      0,
     );
 
     // @ts-ignore
