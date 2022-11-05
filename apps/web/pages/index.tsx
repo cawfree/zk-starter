@@ -14,11 +14,17 @@ const {
   deployEtherFromFaucet,
 } = Environment;
 
+type Result = {
+  readonly successfullyVerifiedLocally: boolean;
+  readonly successfullyVerifiedOnChain: boolean;
+};
+
 export default function Main(): JSX.Element {
 
   const {isConnected} = useAccount();
   const provider = useProvider();
   const {data: signer} = useSigner();
+  const [result, setResult] = React.useState<Result | null>(null);
 
   const onAttemptVerify = React.useCallback(() => void (async () => {
 
@@ -65,8 +71,14 @@ export default function Main(): JSX.Element {
     );
 
     const isValidEthereum = await contract.verifyProof(...JSON.parse(`[${calldata}]`));
+
     console.log({isValidEthereum});
-  })(), [provider, signer]);
+
+    setResult({
+      successfullyVerifiedLocally: isValidLocal,
+      successfullyVerifiedOnChain: isValidEthereum,
+    });
+  })(), [provider, signer, setResult]);
 
   //The goal of this project is to help accelerate developers towards the utilization of private, verifiable computation in their own decentralized applications.
   // Public blockchains are starting to enable co-ordination games on scales never-before-seen in history.
@@ -94,6 +106,16 @@ export default function Main(): JSX.Element {
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
               Execute Zero Knowledge Proof 🪄
             </button>
+          )}
+          {!!result && (
+            <>
+              <p>
+                Verified within browser: {result.successfullyVerifiedLocally ? '✅' : '❌'}
+              </p>
+              <p>
+                Verified on chain: {result.successfullyVerifiedOnChain ? '✅' : '❌'}
+              </p>
+            </>
           )}
         </article>
       </div>
