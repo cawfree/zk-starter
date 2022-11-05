@@ -149,13 +149,17 @@ const pipe = (
 
 child_process.execSync('forge build', {stdio: 'inherit'});
 
+const contractNames = fs.readdirSync(path.resolve('..', 'circuits'))
+  .filter(e => e.endsWith('.circom'))
+  .map(e => e.substring(0, e.lastIndexOf('.circom')));
+
 void (async () => Promise.all([
   pipe(child_process.exec('anvil --chain-id 1337')),
 
   // Wait a little time to spin up the deployment.
   new Promise(resolve => setTimeout(resolve, 1000))
     .then(() => deployContractsAndWriteModule({
-      contractNames: ['Main'],
+      contractNames,
       url: 'http://localhost:8545',
     })),
 ]))();
