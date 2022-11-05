@@ -20,7 +20,7 @@ import {Main as Environment} from 'foundry';
 const {rpcUrl} = Environment;
 
 const { chains, provider } = configureChains(
-  [chain.mainnet, chain.polygon, chain.optimism, chain.arbitrum, chain.localhost],
+  [chain.localhost],
   [
     jsonRpcProvider({
       rpc: () => ({http: rpcUrl}),
@@ -34,7 +34,7 @@ const {connectors} = getDefaultWallets({
 });
 
 const wagmiClient = createClient({
-  autoConnect: true,
+  autoConnect: false,
   connectors,
   provider
 })

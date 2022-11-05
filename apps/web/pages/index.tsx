@@ -120,6 +120,5 @@ export default function Main(): JSX.Element {
         </article>
       </div>
     </div>
-
   );
 }
