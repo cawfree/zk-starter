@@ -4,6 +4,8 @@ import * as fs from 'fs';
 
 import {ethers} from 'ethers';
 
+console.log('YOOOOKOKDopkspdfoakfposdfok');
+
 const ANVIL_DEFAULT_WALLET_PRIVATE_KEY_DO_NOT_USE_YOU_WILL_GET_REKT = '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80';
 
 const deploy = async ({
@@ -18,7 +20,7 @@ const deploy = async ({
   const wallet = new ethers.Wallet(ANVIL_DEFAULT_WALLET_PRIVATE_KEY_DO_NOT_USE_YOU_WILL_GET_REKT, provider);
 
   const {abi, bytecode} = JSON.parse(fs.readFileSync(
-    path.resolve('..', '..', 'packages', 'ethereum', 'out', `${contractName}.sol`, `${contractName}.json`),
+    path.resolve('..', '..', 'packages', 'foundry', 'out', `${contractName}.sol`, `${contractName}.json`),
     'utf-8'
   ));
 
@@ -27,13 +29,15 @@ const deploy = async ({
   const contract = await factory.deploy();
   const {address: deploymentAddress} = contract;
 
+  if (!fs.existsSync(path.resolve('dist'))) fs.mkdirSync('dist');
+
   // TODO: create the package here
   fs.writeFileSync(
     path.resolve('dist', 'index.ts'),
     `
 // @ts-expect-error missing declaration
 const {abi, bytecode} = ${JSON.stringify(JSON.parse(fs.readFileSync(
-  path.resolve('..', 'ethereum', 'out', `${contractName}.sol`, `${contractName}.json`),
+  path.resolve('..', 'foundry', 'out', `${contractName}.sol`, `${contractName}.json`),
  'utf-8',
 )))};
     

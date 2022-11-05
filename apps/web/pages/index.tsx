@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Main as Environment} from 'anvil';
+import {Main as Environment} from 'foundry';
 // @ts-expect-error missing-declaration
 import * as ffjavascript from 'ffjavascript';
 

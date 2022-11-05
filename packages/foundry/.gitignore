@@ -12,3 +12,6 @@ out/
 
 # Generated
 src/generated
+
+# Internal distribution
+dist/

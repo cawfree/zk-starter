@@ -71,7 +71,7 @@ circuits.forEach((circuit: string) => {
     opts,
   );
 
-  const contractsDir = path.resolve('packages', 'ethereum', 'src', 'generated');
+  const contractsDir = path.resolve('packages', 'foundry', 'src', 'generated');
   if (!fs.existsSync(contractsDir)) fs.mkdirSync(contractsDir);
 
   // Export matching solidity verifier.

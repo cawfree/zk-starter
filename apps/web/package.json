@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "anvil": "*",
+    "foundry": "*",
     "ethers": "5.7.2",
     "ffjavascript": "^0.2.57",
     "next": "13.0.0",

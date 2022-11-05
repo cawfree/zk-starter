@@ -1,8 +1,9 @@
 {
-  "name": "anvil",
+  "name": "foundry",
   "version": "0.0.0",
   "main": "dist",
   "scripts": {
+    "test": "forge test",
     "dev": "ts-node scripts/dev"
   },
   "dependencies": {
