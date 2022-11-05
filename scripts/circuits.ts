@@ -71,6 +71,7 @@ circuits.forEach((circuit: string) => {
     opts,
   );
 
+  const scriptDir = path.resolve('packages', 'foundry', 'script');
   const testsDir = path.resolve('packages', 'foundry', 'test');
   const contractsDir = path.resolve('packages', 'foundry', 'src');
   const generatedContractsDir = path.resolve(contractsDir, 'generated');
@@ -131,12 +132,33 @@ contract ${name}Test is Test {
   function setUp() public {
     ${name.toLowerCase()} = new ${name}();
   }
-  
-  function verifyTestsAreInvokedFor${name}() public {
+
+  function testTestsAreInvokedFor${name}() public {
     assertEq(true, true);
   }
 
 }
+      `.trim(),
+    );
+
+  const deployScriptForSmartContractForVerifier = path.resolve(scriptDir, `${name}.s.sol`);
+
+  if (!fs.existsSync(deployScriptForSmartContractForVerifier))
+    fs.writeFileSync(
+      deployScriptForSmartContractForVerifier,
+      `
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.11;
+
+import "forge-std/Script.sol";
+
+contract ${name}Script is Script {
+    function setUp() public {}
+
+    function run() public {
+        vm.broadcast();
+    }
+}     
       `.trim(),
     );
 
