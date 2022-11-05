@@ -4,8 +4,6 @@ import * as fs from 'fs';
 
 import {ethers} from 'ethers';
 
-console.log('YOOOOKOKDopkspdfoakfposdfok');
-
 const ANVIL_DEFAULT_WALLET_PRIVATE_KEY_DO_NOT_USE_YOU_WILL_GET_REKT = '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80';
 
 const deploy = async ({
@@ -61,6 +59,8 @@ const pipe = (
   child?.stderr?.pipe(process.stderr);
   return child;
 };
+
+child_process.execSync('forge build', {stdio: 'inherit'});
 
 void (async () => Promise.all([
   pipe(child_process.exec('anvil')),
