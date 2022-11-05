@@ -131,6 +131,11 @@ contract ${name}Test is Test {
   function setUp() public {
     ${name.toLowerCase()} = new ${name}();
   }
+  
+  function verifyTestsAreInvokedFor${name}() public {
+    assertEq(true, true);
+  }
+
 }
       `.trim(),
     );
