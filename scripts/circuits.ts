@@ -4,7 +4,9 @@ import * as path from 'path';
 
 const ext = '.circom';
 
-const circuits = fs.readdirSync(path.resolve('packages', 'circuits'))
+const foundry = path.resolve('packages', 'foundry');
+
+const circuits = fs.readdirSync(path.resolve(foundry, 'circuits'))
   .filter(e => e.endsWith(ext));
 
 const opts = {stdio: 'inherit'} as const;
@@ -17,7 +19,7 @@ circuits.forEach((circuit: string) => {
 
   // Compile circuit.
   child_process.execSync(
-    `circom ${path.resolve('packages', 'circuits', circuit)} -o build/ --r1cs --wasm`,
+    `circom ${path.resolve(foundry, 'circuits', circuit)} -o build/ --r1cs --wasm`,
     opts,
   );
 
@@ -71,9 +73,9 @@ circuits.forEach((circuit: string) => {
     opts,
   );
 
-  const scriptDir = path.resolve('packages', 'foundry', 'script');
-  const testsDir = path.resolve('packages', 'foundry', 'test');
-  const contractsDir = path.resolve('packages', 'foundry', 'src');
+  const scriptDir = path.resolve(foundry, 'script');
+  const testsDir = path.resolve(foundry, 'test');
+  const contractsDir = path.resolve(foundry, 'src');
   const generatedContractsDir = path.resolve(contractsDir, 'generated');
 
   if (!fs.existsSync(generatedContractsDir)) fs.mkdirSync(generatedContractsDir);
