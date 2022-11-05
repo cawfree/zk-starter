@@ -15,9 +15,9 @@ import {
   WagmiConfig,
 } from 'wagmi';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
-import {Main as Environment} from 'foundry';
+import {ExampleCircuit} from 'foundry';
 
-const {rpcUrl} = Environment;
+const {rpcUrl} = ExampleCircuit;
 
 const { chains, provider } = configureChains(
   [chain.localhost],

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Main} from 'foundry';
+import {ExampleCircuit} from 'foundry';
 
 import {ethers} from 'ethers';
 import {ConnectButton} from '@rainbow-me/rainbowkit';
@@ -10,7 +10,7 @@ const {
   abi,
   deployEtherFromFaucet,
   createZeroKnowledgeHelpersAsync,
-} = Main;
+} = ExampleCircuit;
 
 type Result = {
   readonly successfullyVerifiedLocally: boolean;

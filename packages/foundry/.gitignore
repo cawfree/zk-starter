@@ -15,3 +15,8 @@ src/generated
 
 # Internal distribution
 dist/
+
+# ExampleCircuit
+src/ExampleCircuit.sol
+test/ExampleCircuit.t.sol
+script/ExampleCircuit.s.sol
