@@ -68,23 +68,36 @@ export default function Main(): JSX.Element {
     console.log({isValidEthereum});
   })(), [provider, signer]);
 
+  //The goal of this project is to help accelerate developers towards the utilization of private, verifiable computation in their own decentralized applications.
+  // Public blockchains are starting to enable co-ordination games on scales never-before-seen in history.
   return (
-    <>
+    <div className="py-4 px-4">
+      <ConnectButton />
       <div className="min-h-screen min-w-screen py-4 px-4">
         <article className="container prose lg:prose-xl">
-          <h1>Welcome to zk-starter!</h1>
-          {isConnected ? (
+          <h1>Welcome to zk-starter! 👋</h1>
+          <p>
+            We can use adversarial incentivised networks like <a href="https://ethereum.org">Ethereum</a> to perform computation with very strong guarantees of correctness, immutability and verifiability.
+          </p>
+          <p>
+            Although the security and resilience of public blockchains are indeed thanks to their open nature, humans nonetheless have a fundamental right to privacy, and decentralized organizations must be capable of authentication of users and data.
+          </p>
+          <p>
+            A zero knowledge proof is a goldilocks paradigm, an inexplicable feature of the mathematics of the universe; it helps us all operate privately, securely, trustlessly, with integrity; all via publicly-verifiable information channels.
+          </p>
+          <p>
+            The ability to securely and indisputably demonstrate access to information without revealing that information is magical.
+          </p>
+          {isConnected && (
             <button
               onClick={onAttemptVerify}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-              Execute Zero Knowledge Proof
+              Execute Zero Knowledge Proof 🪄
             </button>
-          ) : (
-            <ConnectButton />
           )}
         </article>
       </div>
-    </>
+    </div>
 
   );
 }
