@@ -17,13 +17,13 @@ curl -L https://foundry.paradigm.xyz | bash # install foundry
  
 > 💡 All the build artifacts are cached, so you'll only be required to do this once-per-installation.
 
-> ⚠️ You can delete the ignore flag of the `build/` directory within the [`.gitignore`](.gitignore) to avoid data loss. By default, `zk-starter` is configured not to track the results of ceremonies. 
+> ⚠️ By default, `zk-starter` is configured not to track the results of ceremonies. You can delete the ignore flag of the `build/` directory within the [`.gitignore`](.gitignore) to avoid data loss. 
 
 4. Finally, run `yarn dev` to execute the entire stack on [`http://localhost:3000`](http://localhost:3000). This will redeploy the auto-generated [__verifier logic__](https://docs.circom.io/getting-started/proving-circuits/) made available to your [__smart contracts__](https://ethereum.org/en/developers/docs/smart-contracts/) on the [`anvil`](https://github.com/foundry-rs/foundry) local chain and inject the relevant configuration properties into your frontend.
 
 ### 🙏 Attribution
 
-This monorepo was inspired by [__BattleZips 🏴‍☠️__](https://twitter.com/Battlezips) ([__Git__](https://github.com/BattleZips/BattleZips)). Thank you for helping increase accessibility to of the state-of-the-art in modern cryptography.
+This monorepo was inspired by [__BattleZips 🏴‍☠️__](https://twitter.com/Battlezips) ([__Git__](https://github.com/BattleZips/BattleZips)). Thank you for helping increase accessibility to the state-of-the-art in modern cryptography.
 
 ### ✌️ License
 [__MIT__](./LICENSE)
