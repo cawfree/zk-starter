@@ -26,26 +26,26 @@ contract MainTest is Test {
     function testVerifyProof() public {
         bool result = main.verifyProof(
           [
-            uint256(0x0a7774c5810dfab4355ba2a2a3470ab697b4c53045ed76a2ebe9615a000ae11d),
-            uint256(0x1205d94c66f9243152214ba7ec56e9fa6361acd48585c0c86455cf88ea1a9d03)
+            uint256(0x215a0ebfd92aefc100ff2e02e8257fa66eda37c4dd511e51c26fc703e0d02d10),
+            uint256(0x0239e56d25c6188c7b6b6be94837c78f73516731bfdfc5cd414679e710065d4a)
           ],
           [
             [
-              uint256(0x0b98bba3e11dc812a03e790dfd1cda8f50382dba0bb0a88a747e1b64ba94f6c5),
-              uint256(0x2d730fa341572836a1651d889bc670b525221eebc1e22bb0a30eadde83824aba)
+              uint256(0x052fd1d60798b8ad311a743fc56b896fbee3f3128f680cf4118379bdb6717b70),
+              uint256(0x0bb2582309e23e9381d29046021543406917491ec7d8a07b25fc53c42ec9a6ca)
             ],
             [
-              uint256(0x1c61e5df58ebd12173fa73bdbd0e07236b45f51f6e139898a5d3eeccab9c5d7b),
-              uint256(0x154d701105fa01a0a596f85d0c1ff48a104bc4030e0c9d5581ebdb8f7cafd775)
+              uint256(0x1b9c47c8e01d2a942d61e471f9ce2977640ff2720760ded1e01d888f1f2a63e3),
+              uint256(0x69693c859ddf28c50148380c55cb41e39c2bbc83fb81d40e662e9e58aa7b31)
             ]
           ],
           [
-            uint256(0x161e2209caaadda4747ed0b97f810facb2efbcadef333f9170515a11f7753902),
-            uint256(0x1ab07345f3f9302afd31617006598ffbb9fcfee9782f6f403590e8bec8888050)
+            uint256(0x08a4a6278880d96d72ccbf1973181559318bec5b8aab3f522dde3829e5564683),
+            uint256(0x0824542e317aba16cfaaeb2247725e90fdca0ba7ac6647b75e41b8a4d9dab23b)
           ],
           [
-            uint256(0x0000000000000000000000000000000000000000000000000000000000000021),
-            uint256(0x0000000000000000000000000000000000000000000000000000000000000003)
+            uint256(0x21),
+            uint256(0x03)
           ]
         );
         assertEq(result, true);

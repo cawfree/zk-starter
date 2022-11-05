@@ -1,5 +1,7 @@
 import * as React from 'react';
 import {Main as Environment} from 'anvil';
+// @ts-expect-error missing-declaration
+import * as ffjavascript from 'ffjavascript';
 
 import mainWitnessCalculator from '../public/Main_witness_calculator';
 import {ethers, Wallet} from 'ethers';
@@ -22,6 +24,11 @@ export default function Main(): JSX.Element {
 
     const contract = new ethers.Contract(contractAddress, abi, wallet);
 
+    const before = await contract.number();
+    await contract.increment();
+    const after = await contract.number();
+    console.log({before, after});
+
     // TODO: turn this into a module
     const [wasm, verificationKey] = await Promise.all([
       fetch('/Main.wasm').then(e => e.arrayBuffer()),
@@ -39,37 +46,21 @@ export default function Main(): JSX.Element {
     // @ts-ignore
     const { proof, publicSignals } = await snarkjs.groth16.prove('/Main_final.zkey', witnessBuffer);
 
-    const current = await contract.number();
-    await contract.increment();
-    const next = await contract.number();
-
-
-    //// @ts-ignore
-    //const calldata = await snarkjs.groth16.exportSolidityCallData(
-    //  {
-    //    ...extras,
-    //    pi_a: pi_a.map((e: unknown) => ethers.BigNumber.from(e).toHexString().substring(2)),
-    //    pi_b: pi_b.map((e: readonly unknown[]) => e.map((f: unknown) => ethers.BigNumber.from(f).toHexString().substring(2))),
-    //    pi_c: pi_c.map((e: unknown) => ethers.BigNumber.from(e).toHexString().substring(2)),
-    //  },
-    //  publicSignals,
-    // );
-
-    //const solidityCallData = JSON.parse("[" + calldata + "]");
-
-    //console.log(solidityCallData);
-
+    // @ts-ignore
+    const {unstringifyBigInts} = ffjavascript.utils;
     // @ts-ignore
     const isValidLocal = await snarkjs.groth16.verify(verificationKey, publicSignals, proof);
     console.log({isValidLocal});
+
+    // https://gist.github.com/chnejohnson/c6d76ef15c108464539de535d48a7f9b
     // @ts-ignore
-    console.log(await snarkjs.groth16.exportSolidityCallData(proof, publicSignals));
+    const calldata = await snarkjs.groth16.exportSolidityCallData(
+      unstringifyBigInts(proof),
+      unstringifyBigInts(publicSignals)
+    );
 
-    //// @ts-ignore
-    //const isValidEthereum = await contract.verifyProof(...solidityCallData);
-
-    //console.log({isValidLocal, isValidEthereum});
-
+    const isValidEthereum = await contract.verifyProof(...JSON.parse(`[${calldata}]`));
+    console.log({isValidEthereum});
   })(), []);
 
   // eslint-disable-next-line react/no-children-prop
