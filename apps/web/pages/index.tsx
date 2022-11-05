@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Main as Environment} from 'foundry';
+import {Main} from 'foundry';
 // @ts-expect-error missing-declaration
 import * as ffjavascript from 'ffjavascript';
 
@@ -12,14 +12,14 @@ const {
   abi,
   deployEtherFromFaucet,
   createZeroKnowledgeHelpersAsync,
-} = Environment;
+} = Main;
 
 type Result = {
   readonly successfullyVerifiedLocally: boolean;
   readonly successfullyVerifiedOnChain: boolean;
 };
 
-export default function Main(): JSX.Element {
+export default function App(): JSX.Element {
 
   const {isConnected} = useAccount();
   const provider = useProvider();
