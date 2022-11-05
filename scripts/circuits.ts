@@ -71,6 +71,7 @@ circuits.forEach((circuit: string) => {
     opts,
   );
 
+  const testsDir = path.resolve('packages', 'foundry', 'test');
   const contractsDir = path.resolve('packages', 'foundry', 'src');
   const generatedContractsDir = path.resolve(contractsDir, 'generated');
 
@@ -106,6 +107,31 @@ pragma solidity ^0.8.11;
 import "./generated/${name}Verifier.sol";
 
 contract ${name} is Verifier {}
+      `.trim(),
+    );
+
+  const testForSmartContractForVerifier = path.resolve(testsDir, `${name}.t.sol`);
+
+  // TODO: enforce that circuits are named with an uppercase letter
+
+  if (!fs.existsSync(testForSmartContractForVerifier))
+    fs.writeFileSync(
+      testForSmartContractForVerifier,
+      `
+      // SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.11;
+
+import "forge-std/Test.sol";
+
+import "../src/${name}.sol";
+
+contract ${name}Test is Test {
+  ${name} public ${name.toLowerCase()};
+
+  function setUp() public {
+    ${name.toLowerCase()} = new ${name}();
+  }
+}
       `.trim(),
     );
 
