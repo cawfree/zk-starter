@@ -56,8 +56,6 @@ export default function App(): JSX.Element {
     });
   })(), [provider, signer, setResult]);
 
-  //The goal of this project is to help accelerate developers towards the utilization of private, verifiable computation in their own decentralized applications.
-  // Public blockchains are starting to enable co-ordination games on scales never-before-seen in history.
   return (
     <div className="py-4 px-4">
       <ConnectButton />
